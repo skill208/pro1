@@ -1,14 +1,18 @@
 package org.androidtown.lbs.location;
 
 import android.database.Cursor;
+import android.speech.tts.TextToSpeech;
 import android.widget.EditText;
 import android.Manifest;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.*;
-
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,11 +22,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.CheckBox;
+
+import android.widget.*;
+
+
 import android.database.sqlite.SQLiteDatabase;
 import android.app.Activity;
 import android.content.ContentValues;
@@ -37,7 +40,9 @@ import android.widget.CompoundButton;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import android.speech.tts.TextToSpeech;
 
+import android.speech.tts.TextToSpeech.OnInitListener;
 import static java.sql.DriverManager.println;
 
 /**
@@ -45,8 +50,9 @@ import static java.sql.DriverManager.println;
  *
  * @author Mike
  */
-public class MainActivity extends AppCompatActivity implements HBEBTListener {
-
+public class MainActivity extends AppCompatActivity implements HBEBTListener, OnInitListener {
+    //private TextToSpeech mTts;
+    private TextToSpeech myTTS;
     private static String TAG = "MainActivity";
 
 
@@ -64,7 +70,8 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener {
     private byte mRecvbuf[] = new byte[8];
     private int mRecvPt = 0;
     private HBEBT mDriver;
-    CheckBox SensorReceiver;
+    //CheckBox SensorReceiver;
+    ImageButton SensorReceiver;
     EditText GroupId;
     int temp;
 
@@ -95,16 +102,34 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        myTTS = new TextToSpeech(this, this);
         mDriver = new HBEBT(this);
         mDriver.setListener(this);
         TextView = (TextView) findViewById(R.id.textView1);
         Init(0);
-        SensorReceiver = (CheckBox) findViewById(R.id.sensorCheck);
+        SensorReceiver = (ImageButton) findViewById(R.id.imageButton3);
+
         Set = (Button) findViewById(R.id.Set);
         Set.setOnClickListener(new CL());
         GroupId = (EditText) findViewById(R.id.groupId);
         GroupIDText = (TextView) findViewById(R.id.groupidText);
-        SensorReceiver.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {
+        SensorReceiver.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                //센서 거리 나오게
+                ReceiveOn(1);
+
+
+
+            }
+
+            //         if(i==1) {
+
+
+            //      }
+
+        });
+        /*SensorReceiver.setOnClickListener(new CheckBox.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -115,22 +140,23 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener {
                     ReceiveOn(0);
                 }
             }
-        });
+        });*/
 
 
         contentsText = (TextView) findViewById(R.id.contentsText);
 
-        safeView = (ImageView) findViewById(R.id.imageView1);
-        dangerView = (ImageView) findViewById(R.id.imageView2);
+       // safeView = (ImageView) findViewById(R.id.imageView1);
+      //  dangerView = (ImageView) findViewById(R.id.imageView2);
 
-        status = (TextView) findViewById(R.id.contentsText2);
+       // status = (TextView) findViewById(R.id.contentsText2);
 
         sp = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
 
         soundID = sp.load(getApplicationContext(), R.raw.hangouts_incoming_call, 1);
 
         // 버튼 이벤트 처리
-        Button button01 = (Button) findViewById(R.id.button01);
+        ImageButton button01 = (ImageButton) findViewById(R.id.imageButton4);
+        //Button button01 = (Button) findViewById(R.id.button01);
         button01.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -139,40 +165,6 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener {
                 startLocationService();
                 gpsdbcount--;
 
-                /*
-                if (i == 0) {
-                    safeView.setImageResource(R.drawable.base);
-                    dangerView.setImageResource(R.drawable.danger);
-                    i++;
-                } else {
-                    safeView.setImageResource(R.drawable.safe);
-                    dangerView.setImageResource(R.drawable.base);
-                    i--;
-                }
-                */
-/*
-                try {
-
-                    Toast toastView = Toast.makeText(getApplicationContext(),
-                            i,
-                            Toast.LENGTH_LONG);
-
-
-                    // 입력된 x, y offset 값을 이용해 위치를 지정합니다.
-                    toastView.setGravity(Gravity.CENTER, 0, 120);
-
-                    toastView.show();
-
-                } catch (NumberFormatException ex) {
-                    Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
-                }
-*/
-                //         initSound();
-                //      playSound();
-
-
-
-                //    sp.play(soundID, 1, 1, 0, 0, 1);
 
 
             }
@@ -255,11 +247,9 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener {
     /**
      * 위치 정보 확인을 위해 정의한 메소드
      */
-   /* private*/ void startLocationService() {
+    private void startLocationService() {
         // 위치 관리자 객체 참조
-        LocationManager manager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-
-
+        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         // 위치 정보를 받을 리스너 생성
         GPSListener gpsListener = new GPSListener();
@@ -388,7 +378,7 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener {
 
             if (addressList != null) {
                 contentsText.setText("");
-                contentsText.append("\nCount of Addresses for [" + latitude + ", " + longitude + "] : " + addressList.size());
+                //contentsText.append("\nCount of Addresses for [" + latitude + ", " + longitude + "] : " + addressList.size());
                 for (int i = 0; i < addressList.size(); i++) {
                     Address outAddr = addressList.get(i);
                     int addrCount = outAddr.getMaxAddressLineIndex() + 1;
@@ -396,10 +386,10 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener {
                     for (int k = 0; k < addrCount; k++) {
                         outAddrStr.append(outAddr.getAddressLine(k));
                     }
-                    outAddrStr.append("\n\tLatitude : " + outAddr.getLatitude());
-                    outAddrStr.append("\n\tLongitude : " + outAddr.getLongitude());
+                  //  outAddrStr.append("\n\tLatitude : " + outAddr.getLatitude());
+                    //outAddrStr.append("\n\tLongitude : " + outAddr.getLongitude());
 
-                    contentsText.append("\n\tAddress #" + i + " : " + outAddrStr.toString());
+                    contentsText.append("\n\t #" + i + " : " + outAddrStr.toString());
                 }
             }
 
@@ -573,7 +563,9 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener {
     @Override
     public void onDestroy() {
         mDriver.disconnect();
+
         super.onDestroy();
+        myTTS.shutdown();
     }
 
     private byte getCSC(byte[] buff) {
@@ -698,15 +690,15 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener {
                     } catch (NumberFormatException ex) {
                         Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
                     }
-                    safeView.setImageResource(R.drawable.base);
-                    dangerView.setImageResource(R.drawable.danger);
+                  //  safeView.setImageResource(R.drawable.base);
+                   // dangerView.setImageResource(R.drawable.danger);
 
                     TextView.setText("Ultra : "+temp);
                 }
 
                 else if(temp>100) {
-                    safeView.setImageResource(R.drawable.safe);
-                    dangerView.setImageResource(R.drawable.base);
+                   // safeView.setImageResource(R.drawable.safe);
+                   // dangerView.setImageResource(R.drawable.base);
                     TextView.setText("Ultra : "+temp);
                 }/*
                 else if(temp>1&&temp<20){
@@ -733,7 +725,29 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener {
                 break;
         }
     }
+    public void onInit(int status) {
 
+        String myText1 = "안녕하세요 안드로이드 블로그 녹두장군 입니다.";
+
+        String myText2 = "말하는 스피치 입니다.";
+
+        myTTS.speak(myText1, TextToSpeech.QUEUE_FLUSH, null);
+
+        myTTS.speak(myText2, TextToSpeech.QUEUE_ADD, null);
+
+    }
+
+
+
+
+/*
+    @Override
+    protected void onDestroy() {
+
+
+
+    }
+*/
 
 
 }

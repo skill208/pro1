@@ -1,49 +1,100 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="183dp"
+        android:layout_height="246dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/an1"
+        tools:layout_editor_absoluteY="257dp" />
 
-    <Button
-        android:id="@+id/button01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="위치 확인 시작"
-        android:layout_marginBottom="86dp"
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="183dp"
+        android:layout_height="246dp"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/textView1"
-        android:layout_toEndOf="@+id/textView1" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_column="0"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_row="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/an3" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:id="@+id/scrollView"
-        android:layout_above="@+id/scrollView2"
-        android:layout_alignLeft="@+id/TextView3"
-        android:layout_alignStart="@+id/TextView3">
-        <TextView
-            android:id="@+id/contentsText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text=""
-            />
-    </ScrollView>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:id="@+id/scrollView2"
-        android:layout_above="@+id/button01"
+    <ImageButton
+        android:id="@+id/imageButton4"
+        android:layout_width="183dp"
+        android:layout_height="246dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        android:layout_column="1"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_row="1"
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/contentsText2"
-            android:layout_toEndOf="@+id/imageView1"
-            android:layout_alignTop="@+id/scrollView2"
-            android:layout_toRightOf="@+id/imageView1" />
-    </ScrollView>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/an4"
+        tools:layout_editor_absoluteX="207dp" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="183dp"
+        android:layout_height="246dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/an2" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+
+        android:layout_alignEnd="@+id/imageButton4"
+        android:layout_alignLeft="@+id/imageButton4"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/imageButton4"
+        android:layout_alignStart="@+id/imageButton4"></ScrollView>
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -51,7 +102,7 @@
         android:layout_height="wrap_content"
         android:text="조회"
         android:id="@+id/button02"
-        android:layout_above="@+id/imageView2"
+
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -62,118 +113,32 @@
         android:text="기록 초기화"
         android:id="@+id/button03"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/button02" />
+        android:layout_toLeftOf="@+id/button02"
+        android:layout_toStartOf="@+id/button02" />
 
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/safe"
-        android:id="@+id/imageView1"
-        android:layout_alignBottom="@+id/dangerText"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/TextView1"
-        android:text="현재 상태"
-        android:layout_below="@+id/f23fsf"
-        android:layout_toRightOf="@+id/f23fsf"
-        android:layout_toEndOf="@+id/f23fsf" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/safeText"
-        android:text="안전"
-        android:singleLine="false"
-        android:layout_above="@+id/TextView3"
-        android:layout_toRightOf="@+id/imageView1"
-        android:layout_toEndOf="@+id/imageView1" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/base"
-        android:id="@+id/imageView2"
-        android:layout_alignTop="@+id/imageView1"
-        android:layout_toLeftOf="@+id/button01"
-        android:layout_toStartOf="@+id/button01" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/dangerText"
-        android:text="위험"
-        android:layout_marginTop="43dp"
-        android:layout_below="@+id/TextView1"
-        android:layout_alignLeft="@+id/button01"
-        android:layout_alignStart="@+id/button01" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/TextView3"
-        android:text="현재위치"
-        android:layout_marginTop="41dp"
-        android:layout_below="@+id/imageView2"
-        android:layout_alignRight="@+id/TextView1"
-        android:layout_alignEnd="@+id/TextView1" />
 
     <TextView
         android:text="NOT CONNECT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView1"
-        android:layout_below="@+id/f23fsf"
-        android:layout_toRightOf="@+id/safeText"
-        android:layout_toEndOf="@+id/safeText" />
 
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/f23fsf">
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <TextView
-        android:text="Sensor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView"
-        android:layout_alignBottom="@+id/sensorCheck"
-        android:layout_toLeftOf="@+id/imageView2"
-        android:layout_toStartOf="@+id/imageView2" />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="OFF"
-        android:id="@+id/sensorCheck"
-        android:checked="false"
-        android:layout_above="@+id/groupId"
-        android:layout_alignRight="@+id/dangerText"
-        android:layout_alignEnd="@+id/dangerText" />
-
-    <TextView
-        android:text="GROUP ID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/groupidText"
+        android:layout_alignBaseline="@+id/groupId"
         android:layout_alignBottom="@+id/groupId"
-        android:layout_toLeftOf="@+id/sensorCheck"
-        android:layout_toStartOf="@+id/sensorCheck" />
+        android:layout_toLeftOf="@+id/groupidText"
+        android:layout_toStartOf="@+id/groupidText"
+        android:layout_marginRight="14dp"
+        android:layout_marginEnd="14dp" />
+
+
+    <TextView
+        android:id="@+id/groupidText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GROUP ID"
+        android:layout_alignBottom="@+id/imageButton3"
+        android:layout_alignLeft="@+id/Set"
+        android:layout_alignStart="@+id/Set" />
 
     <EditText
         android:id="@+id/groupId"
@@ -184,32 +149,31 @@
         android:inputType="number"
         android:maxLength="2"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/sensorCheck"
-        android:layout_toEndOf="@+id/sensorCheck" />
+        android:layout_toLeftOf="@+id/button03"
+        android:layout_toStartOf="@+id/button03"
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp" />
 
     <Button
         android:id="@+id/Set"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
 
-        android:layout_alignTop="@+id/button01"
-        android:layout_alignRight="@+id/imageView2"
-        android:layout_alignEnd="@+id/imageView2"
-        android:text="set" />
-
-    <RadioButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New RadioButton"
-        android:id="@+id/radioButton"
+        android:layout_height="89dp"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="358dp"
-        android:layout_marginStart="358dp" />
-        android:text="set" />
+        android:background="@android:color/holo_blue_light"
+        android:elevation="9dp"
+        android:text="시각장애인어플"
+        android:textAppearance="@style/TextAppearance.AppCompat" />
 
-
-
-
+    <TextView
+        android:id="@+id/contentsText"
+        android:layout_width="186dp"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_above="@+id/groupId"
+        android:layout_alignRight="@+id/imageButton4"
+        android:layout_alignEnd="@+id/imageButton4"
+        android:layout_marginBottom="43dp" />
 </RelativeLayout>

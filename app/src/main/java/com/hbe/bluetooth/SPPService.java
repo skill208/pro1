@@ -16,8 +16,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.UUID;
 
+
+
 @SuppressLint({"HandlerLeak"})
 public class SPPService implements HBEBTListener {
+
+
+
+
     public static final int MESSAGE_STATE_CHANGE = 1;
     public static final int MESSAGE_READ = 2;
     public static final int MESSAGE_DEVICE_NAME = 4;
@@ -346,7 +352,17 @@ public class SPPService implements HBEBTListener {
 
         }
     }
+
+
+
+
+
 }
+
+
+
+
+
 
 
 /*
@@ -368,7 +384,7 @@ import hbe.com.bluetooth.HBEBTListener;
 
 @SuppressLint("HandlerLeak")
 public class SPPService implements HBEBTListener {
-	
+
 	public static final int MESSAGE_STATE_CHANGE = 1;
 	public static final int MESSAGE_READ = 2;
 	public static final int MESSAGE_DEVICE_NAME = 4;
@@ -377,7 +393,7 @@ public class SPPService implements HBEBTListener {
 
 
   private static final UUID SPP_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    
+
     private final BluetoothAdapter mAdapter;
     //private final Handler mHandler;
     private ConnectThread mConnectThread;
@@ -386,12 +402,12 @@ public class SPPService implements HBEBTListener {
     private HBEBTListener mContext;
 
     public static final int STATE_NONE = 0;
-    public static final int STATE_CONNECTING = 1; 
-    public static final int STATE_CONNECTED = 2; 
-    public static final int STATE_CON_FAILED = 3; 
-    public static final int STATE_CON_LOST = 4;  
-    public static final int STATE_RECEIVE = 5;  
-    
+    public static final int STATE_CONNECTING = 1;
+    public static final int STATE_CONNECTED = 2;
+    public static final int STATE_CON_FAILED = 3;
+    public static final int STATE_CON_LOST = 4;
+    public static final int STATE_RECEIVE = 5;
+
 
     public SPPService(Context context) {
         mAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -403,7 +419,7 @@ public class SPPService implements HBEBTListener {
         mState = state;
         mHandler.obtainMessage(state).sendToTarget();
     }
-    
+
     private synchronized void setReceive(byte[] buff){
     	mHandler.obtainMessage(STATE_RECEIVE, buff.clone()).sendToTarget();
     }
@@ -434,14 +450,14 @@ public class SPPService implements HBEBTListener {
     protected synchronized void connected(BluetoothSocket socket, BluetoothDevice device) {
         if (mConnectThread != null) {mConnectThread.cancel(); mConnectThread = null;}
         if (mConnectedThread != null) {mConnectedThread.cancel(); mConnectedThread = null;}
-        
+
         mConnectedThread = new ConnectedThread(socket);
         mConnectedThread.setPriority(1);
         mConnectedThread.start();
 
         setState(STATE_CONNECTED);
     }
-    
+
     protected synchronized void disconnect(){
     	stop();
     }
@@ -503,7 +519,7 @@ public class SPPService implements HBEBTListener {
             }
         }
     }
-    
+
     private class ConnectedThread extends Thread {
         private BluetoothSocket mmSocket;
         private InputStream mmInStream = null;
