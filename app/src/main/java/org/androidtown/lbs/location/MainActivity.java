@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener, On
 
     TextView contentsText;
     Geocoder gc;
-
+    int tmp;
     TextView status;
 
     SQLiteDatabase db;
@@ -690,23 +690,23 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener, On
     private void DisplayValues(byte type, byte temp1, byte temp2) {
 
 
-        int tmp;
+
         switch (type) {
             case 0x41:
                 int temp;
 
                 temp = temp1 & 0xff;
                 temp = (temp << 8 | temp2 & 0xff);
-                tmp = temp;/*
+                tmp = temp;
+
                 Sensor.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v) {
-
 
                         onInit5(tmp);
 
                     }
 
-                });*/
+                });
                 if(temp>10&&temp<=100){
                     sp.play(soundID, 1, 1, 0, 0, 1);
                     //onInit2(1);
@@ -810,7 +810,7 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener, On
 
     public void onInit5(int status) {
 
-        String myText1 = "현재 거리는" +status;
+        String myText1 = "현재 거리는" +status+"cm 입니다.";
 
         myTTS.speak(myText1, TextToSpeech.QUEUE_FLUSH, null);
 
