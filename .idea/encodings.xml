@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/app/src/main/java/org/androidtown/lbs/location/MainActivity.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/org/androidtown/lbs/location/MainActivity.java" charset="UTF-16" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/raw/Alarm.ogg" charset="EUC-KR" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/raw/Alarm.ogg" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/raw/Alarm1.ogg" charset="UTF-16" />
   </component>
 </project>
