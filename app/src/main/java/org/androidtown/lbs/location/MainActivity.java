@@ -2,6 +2,8 @@ package org.androidtown.lbs.location;
 
 import android.database.Cursor;
 import android.speech.tts.TextToSpeech;
+import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.widget.EditText;
 import android.Manifest;
 import android.view.Menu;
@@ -19,6 +21,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -55,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener, On
     private TextToSpeech myTTS;
     private static String TAG = "MainActivity";
 
+    //getSupportActionBar().setDisplayShowCustomEnabled(true);
+
 
     private static String DATABASE_NAME = "databaseName";
     private static String TABLE_NAME = "tableName";
@@ -66,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener, On
 
     SQLiteDatabase db;
    static int tm;
-    Button   Set;
+    ImageButton   Set;
     private byte mRecvbuf[] = new byte[8];
     private int mRecvPt = 0;
     private HBEBT mDriver;
@@ -74,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener, On
     ImageButton SensorReceiver;
     ImageButton SensorOff;
     ImageButton Sensor;
+    Button btn;
     EditText GroupId;
     int temp;
 
@@ -112,10 +118,31 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener, On
         Sensor = (ImageButton) findViewById(R.id.imageButton3);
         SensorReceiver = (ImageButton) findViewById(R.id.imageButton);
         SensorOff = (ImageButton) findViewById(R.id.imageButton2);
-        Set = (Button) findViewById(R.id.Set);
-        Set.setOnClickListener(new CL());
-        GroupId = (EditText) findViewById(R.id.groupId);
+        Set = (ImageButton) findViewById(R.id.imageButton5);
+       // Set.setOnClickListener(new CL());
+        //GroupId = (EditText) findViewById(R.id.groupId);
+       // btn = (Button)findViewById(R.id.button2);
         GroupIDText = (TextView) findViewById(R.id.groupidText);
+        GroupIDText.setText("Group ID :  Set : [" + 10 + "]  ");
+        Set.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                onInit6(1);
+                //if (item.getTitle().equals("Connect")) {
+                  //  if (temp < 50 && temp > 9) {
+                        mDriver.conntect(10);
+                   /* } else {
+                        Toast.makeText(getBaseContext(), "Failed, Check GroupID", Toast.LENGTH_SHORT).show();
+                    }*/
+               //     return true;
+                //}
+                //return false;
+
+            }
+
+
+
+
+        });
         SensorReceiver.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 onInit3(1);
@@ -137,7 +164,6 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener, On
                 onInit4(1);
                 //센서 거리 끄기
                 ReceiveOn(0);
-
 
 
             }
@@ -197,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener, On
             //      }
 
         });
-
+/*
         Button button02 = (Button) findViewById(R.id.button02);
         button02.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -205,8 +231,8 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener, On
                 executeRawQuery();
             }
 
-        });
-
+        });*/
+/*
         Button button03 = (Button) findViewById(R.id.button03);
         button03.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -215,7 +241,7 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener, On
             }
 
         });
-
+*/
         checkDangerousPermissions();
 
 
@@ -538,7 +564,7 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener, On
 
 
 
-
+/*
 
     class CL implements View.OnClickListener {
         @Override
@@ -568,7 +594,7 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener, On
             }
         }
     }
-
+*/
 
     private void ReceiveOn(int t) {
         byte[] buffer = new byte[8];
@@ -606,7 +632,11 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener, On
     }
 
 
-    @Override
+
+
+
+/*
+     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getTitle().equals("Connect")) {
             if (temp < 50 && temp > 9) {
@@ -618,14 +648,14 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener, On
         }
         return false;
     }
-
+*//*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         menu.add("Connect");
         return true;
     }
-
+*/
     @Override
     public void onConnected() {
         Toast.makeText(this, "connected", Toast.LENGTH_SHORT).show();
@@ -770,7 +800,7 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener, On
 
         String myText1 = "안녕하세요 시각장애인 어플 시장위입니다.";
 
-        String myText2 = "센서와 연결해주세요!";
+        String myText2 = "센서를 연결하려면 정중앙을 눌러주세요!";
 
         myTTS.speak(myText1, TextToSpeech.QUEUE_FLUSH, null);
 
@@ -791,7 +821,7 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener, On
     }
     public void onInit3(int status) {
 
-        String myText1 = "센서 작동";
+        String myText1 = "센서 on";
 
         myTTS.speak(myText1, TextToSpeech.QUEUE_FLUSH, null);
 
@@ -800,7 +830,7 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener, On
     }
     public void onInit4(int status) {
 
-        String myText1 = "센서 꺼짐";
+        String myText1 = "센서 off";
 
         myTTS.speak(myText1, TextToSpeech.QUEUE_FLUSH, null);
 
@@ -810,7 +840,16 @@ public class MainActivity extends AppCompatActivity implements HBEBTListener, On
 
     public void onInit5(int status) {
 
-        String myText1 = "현재 거리는" +status+"cm 입니다.";
+        String myText1 = "현재 장애물과 거리는" +status+"cm 입니다.";
+
+        myTTS.speak(myText1, TextToSpeech.QUEUE_FLUSH, null);
+
+        // myTTS.speak(myText2, TextToSpeech.QUEUE_ADD, null);
+
+    }
+    public void onInit6(int status) {
+
+        String myText1 = "중앙을 누르고 진동이 울리면 1234를 누르고 중앙 우측를 눌러주세요";
 
         myTTS.speak(myText1, TextToSpeech.QUEUE_FLUSH, null);
 
